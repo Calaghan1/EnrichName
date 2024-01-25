@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "5f61a29f-4266-42c1-98c3-fb33356e9ced",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28575403"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Dmitriy\",\r\n\"surname\": \"Ushakov\",\r\n\"patronymic\": \"Vasilevich\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/show_all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/show_all",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"show_all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/delete?id=25652e13-9e18-4ef5-a5b2-15a0c9aa26c2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "25652e13-9e18-4ef5-a5b2-15a0c9aa26c2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"name\": \"Larisa\",\r\n        \"surname\": \"Tagirova\",\r\n        \"patronymic\": \"Aleksandrovna\",\r\n        \"age\": 52,\r\n        \"gender\": \"female\",\r\n        \"nationality\": \"RO\"\r\n    }"
+				},
+				"url": {
+					"raw": "localhost:3000/update?id=b8a68483-63b9-47e5-85c7-e1ebae921d42",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"update"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "b8a68483-63b9-47e5-85c7-e1ebae921d42"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

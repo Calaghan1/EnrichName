@@ -49,7 +49,7 @@ func (d *DB)Show_all(page, pageSize int, filters map[string]string) []schemas.Pe
 
 func (d *DB)DeleteByID(id string) int64{
 	res := d.Client.Where("id = ?", id).Delete(&schemas.Person{})
-	helpers.CheckErrorFatal(res.Error, "Failed to delete person", "Person with id: " + id + "deleted")
+	helpers.CheckErrorFatal(res.Error, "Failed to delete person", "Person with id: " + id + " deleted")
 	return	res.RowsAffected
 }
 
@@ -60,13 +60,13 @@ func (d *DB) FindByID(id string) (schemas.Person, error) {
     return person, nil
 }
 
-func (d *DB)UpdateById(id string, NewData schemas.Person) (schemas.Person, error) {
+func (d *DB)UpdateById(id string, NewData schemas.Person) (schemas.Person) {
 	d.FindByID(id)
 	id_new, err := uuid.Parse(id)
-	helpers.CheckErrorFatal(err, "", "")
+	helpers.CheckErrorFatal(err, "Id has been parsed", "Failed to parse id ")
 	NewData.ID = id_new
 	res := d.Client.Save(&NewData)
 	helpers.CheckErrorFatal(res.Error, "Failed to update person with id" + id, "Person with id: "+ id + "updated")
-	return NewData, nil
+	return NewData
 }
 	

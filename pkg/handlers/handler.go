@@ -23,12 +23,12 @@ func (p *Person_handlers)Create(w http.ResponseWriter, r *http.Request) {
 	}
 	var person schemas.Person
 	err := json.NewDecoder(r.Body).Decode(&person)
-	helpers.CheckErrorFatal(err, "Failed to decode json", "")
+	helpers.CheckErrorFatal(err, "Failed to decode json", "Json was decoded")
 
 	person = helpers.Enrase_data(person)
 	res := p.Db.Create_person(person)
 	json_data, err := json.Marshal(res)
-	helpers.CheckErrorFatal(err, "", "")
+	helpers.CheckErrorFatal(err, "Failed to Marshal Json", "Json was Marshaled")
 	w.Write(json_data)
 }
 
@@ -60,15 +60,15 @@ func (p *Person_handlers)Show_all(w http.ResponseWriter, r *http.Request) {
 	pageStr := r.URL.Query().Get("page")
 	limitStr := r.URL.Query().Get("limit")
 	page, err := strconv.Atoi(pageStr)
-	helpers.CheckErrorFatal(err, "", "")
+	helpers.CheckErrorFatal(err, "Failed to convert page(str) to int", "Converted page(str) to int")
 	limit, err := strconv.Atoi(limitStr)
-	helpers.CheckErrorFatal(err, "", "")
+	helpers.CheckErrorFatal(err, "Failed to convert limit(str) to int", "Converted limit(str) to int")
 
 
 	data := p.Db.Show_all(page, limit, filter)
 	log.Print(data)
 	json_data, err := json.Marshal(data)
-	helpers.CheckErrorFatal(err, "Failed to Marshal json", "")
+	helpers.CheckErrorFatal(err, "Failed to Marshal json", "Json was Marshaled")
 	w.Write(json_data)
 }
 
@@ -98,12 +98,11 @@ func (p *Person_handlers)UpdateById(w http.ResponseWriter, r *http.Request) {
 	}
 	var person schemas.Person
 	err := json.NewDecoder(r.Body).Decode(&person)
-	helpers.CheckErrorFatal(err, "Failed to decode json", "")
+	helpers.CheckErrorFatal(err, "Failed to decode json", "Json was decoded")
 	id := r.URL.Query().Get("id")
-	res, err := p.Db.UpdateById(id, person)
-	helpers.CheckErrorFatal(err, "", "")
+	res:= p.Db.UpdateById(id, person)
 	data, err := json.Marshal(res)
-	helpers.CheckErrorFatal(err, "", "")
+	helpers.CheckErrorFatal(err, "Failed to Marshal json", "Json was Marshaled")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
 }

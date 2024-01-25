@@ -44,7 +44,7 @@ type Country struct {
 
 func Enrase_data(person schemas.Person) schemas.Person {
 	resp, err := http.Get("https://api.agify.io/?name=" + person.Name)
-	CheckErrorFatal(err, "", "")
+	CheckErrorFatal(err, "Failed to access" + "https://api.agify.io", "Data from " + "https://api.agify.io " + "was recived")
 	if resp.StatusCode != http.StatusOK {
 		log.Fatalf("Request failed with status: %d", resp.StatusCode)
 	}
@@ -52,26 +52,26 @@ func Enrase_data(person schemas.Person) schemas.Person {
 	var gen_r gen_resp
 	var nat_r national_resp
 	err = json.NewDecoder(resp.Body).Decode(&p)
-	CheckErrorFatal(err, "", "")
+	CheckErrorFatal(err, "Failed to decode json", "Json was decoded")
 
 	person.Age = p.Age
 	resp, err = http.Get("https://api.genderize.io/?name=" + person.Name)
-	CheckErrorFatal(err, "", "")
+	CheckErrorFatal(err, "Failed to access" + "https://api.genderize.io", "Data from " + "https://api.genderize.io " + "was recived")
 	if resp.StatusCode != http.StatusOK {
 		log.Fatalf("Request failed with status: %d", resp.StatusCode)
 	}
 	err = json.NewDecoder(resp.Body).Decode(&gen_r)
-	CheckErrorFatal(err, "", "")
+	CheckErrorFatal(err, "Failed to decode json", "Json was decoded")
 
 	person.Gender = gen_r.Gender
 
 	resp, err = http.Get("https://api.nationalize.io/?name=" + person.Name)
-	CheckErrorFatal(err, "", "")
+	CheckErrorFatal(err, "Failed to access" + "https://api.nationalize.io", "Data from " + "https://api.nationalize.io " + "was recived")
 	if resp.StatusCode != http.StatusOK {
 		log.Fatalf("Request failed with status: %d", resp.StatusCode)
 	}
 	err = json.NewDecoder(resp.Body).Decode(&nat_r)
-	CheckErrorFatal(err, "", "")
+	CheckErrorFatal(err, "Failed to decode json", "Json was decoded")
 	buff := nat_r.Country[0]
 	for i := 1; i < len(nat_r.Country); i++ {
 		if nat_r.Country[i].Probability > buff.Probability {
