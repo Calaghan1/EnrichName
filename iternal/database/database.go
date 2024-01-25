@@ -11,9 +11,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type Database interface {
-	
-}
 
 type DB struct {
 	Client gorm.DB
@@ -52,29 +49,24 @@ func (d *DB)Show_all(page, pageSize int, filters map[string]string) []schemas.Pe
 
 func (d *DB)DeleteByID(id string) int64{
 	res := d.Client.Where("id = ?", id).Delete(&schemas.Person{})
-	helpers.CheckErrorFatal(res.Error, "", "")
+	helpers.CheckErrorFatal(res.Error, "Failed to delete person", "Person with id: " + id + "deleted")
 	return	res.RowsAffected
 }
 
 func (d *DB) FindByID(id string) (schemas.Person, error) {
     var person schemas.Person
     res := d.Client.Where("id = ?", id).First(&person)
-    if res.Error != nil {
-        return person, res.Error
-    }
+    helpers.CheckErrorFatal(res.Error, "Failed to find person with id:" + id, "Person with id: "+ id + "find")
     return person, nil
 }
 
 func (d *DB)UpdateById(id string, NewData schemas.Person) (schemas.Person, error) {
-	_, err := d.FindByID(id)
-	if err != nil {
-		return schemas.Person{},	err
-	}
+	d.FindByID(id)
 	id_new, err := uuid.Parse(id)
 	helpers.CheckErrorFatal(err, "", "")
 	NewData.ID = id_new
 	res := d.Client.Save(&NewData)
-	helpers.CheckErrorFatal(res.Error, "", "")
+	helpers.CheckErrorFatal(res.Error, "Failed to update person with id" + id, "Person with id: "+ id + "updated")
 	return NewData, nil
 }
 	
